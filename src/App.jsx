@@ -3,13 +3,16 @@ import { Building2, Landmark, ShieldCheck, PlusCircle } from "lucide-react";
 import SmeDashboard from "./components/SmeDashboard.jsx";
 import InvestorDashboard from "./components/InvestorDashboard.jsx";
 import AddSmeForm from "./components/AddSmeForm.jsx";
-import { smeProfiles } from "./data/mockData.js";
+import backendProfiles from "./data/backendProfiles.json";
+import { smeProfiles as demoProfiles } from "./data/mockData.js";
+
+const initialProfiles = backendProfiles?.length ? backendProfiles : demoProfiles;
 
 export default function App() {
   const [view, setView] = useState("sme");
   const [profiles, setProfiles] = useState(() => {
     const savedProfiles = localStorage.getItem("qfintrust_sme_profiles");
-    return savedProfiles ? JSON.parse(savedProfiles) : smeProfiles;
+    return savedProfiles ? JSON.parse(savedProfiles) : initialProfiles;
   });
 
   const [selectedSmeId, setSelectedSmeId] = useState(profiles[0]?.smeId || "");
@@ -36,8 +39,8 @@ export default function App() {
 
   function resetDemoData() {
     localStorage.removeItem("qfintrust_sme_profiles");
-    setProfiles(smeProfiles);
-    setSelectedSmeId(smeProfiles[0].smeId);
+    setProfiles(initialProfiles);
+    setSelectedSmeId(initialProfiles[0].smeId);
   }
 
   return (
