@@ -1,4 +1,7 @@
-node_modules
-dist
+node_modules/
+.venv/
+outputs/
+ganache.log
+__pycache__/
+.ipynb_checkpoints/
 .env
-.DS_Store
