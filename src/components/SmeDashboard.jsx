@@ -21,7 +21,12 @@ import {
 } from "../data/mockData.js";
 
 export default function SmeDashboard({ sme }) {
-  const riskTone =
+    const readinessBreakdownData = sme.readinessBreakdown || readinessBreakdown;
+    const forecastDataForSme = sme.forecastData || forecastData;
+    const shapSummaryData = sme.shapSummary || shapSummary;
+    const improvementPlanData = sme.improvementPlan || improvementPlan;
+    const loanMatchesData = sme.loanMatches || loanMatches;
+    const riskTone =
     sme.riskTier === "Very Low" || sme.riskTier === "Low"
       ? "positive"
       : sme.riskTier === "Medium"
@@ -90,7 +95,7 @@ export default function SmeDashboard({ sme }) {
         <div className="panel">
           <h3>Readiness Dimension Breakdown</h3>
           <ResponsiveContainer width="100%" height={260}>
-            <BarChart data={readinessBreakdown}>
+            <BarChart data={readinessBreakdownData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="dimension" tick={{ fontSize: 11 }} />
               <YAxis domain={[0, 100]} />
@@ -103,7 +108,7 @@ export default function SmeDashboard({ sme }) {
         <div className="panel">
           <h3>12-Month Readiness Forecast</h3>
           <ResponsiveContainer width="100%" height={260}>
-            <LineChart data={forecastData}>
+            <LineChart data={forecastDataForSme}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="month" />
               <YAxis domain={[0, 100]} />
@@ -122,7 +127,7 @@ export default function SmeDashboard({ sme }) {
             { key: "value", label: "Value" },
             { key: "effect", label: "Effect on Risk" }
           ]}
-          rows={shapSummary}
+          rows={shapSummaryData}
         />
       </div>
 
@@ -135,7 +140,7 @@ export default function SmeDashboard({ sme }) {
             { key: "recommendation", label: "Recommendation" },
             { key: "targetMetric", label: "Target Metric" }
           ]}
-          rows={improvementPlan}
+          rows={improvementPlanData}
         />
       </div>
 
@@ -150,7 +155,7 @@ export default function SmeDashboard({ sme }) {
             { key: "interestRate", label: "Interest Rate" },
             { key: "maxAmount", label: "Max Amount" }
           ]}
-          rows={loanMatches}
+          rows={loanMatchesData}
         />
       </div>
     </section>
