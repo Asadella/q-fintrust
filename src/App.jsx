@@ -24,18 +24,37 @@ export default function App() {
   const selectedSme =
     profiles.find((sme) => sme.smeId === selectedSmeId) || profiles[0];
 
-  function handleAddSme(newSme) {
-    const smeExists = profiles.some((sme) => sme.smeId === newSme.smeId);
+async function handleAddSme(newSmeInput) {
+  const smeExists = profiles.some((sme) => sme.smeId === newSmeInput.smeId);
 
-    if (smeExists) {
-      alert("This SME ID already exists. Please use a different SME ID.");
-      return;
+  if (smeExists) {
+    alert("This SME ID already exists. Please use a different SME ID.");
+    return;
+  }
+
+  try {
+    const response = await fetch("http://127.0.0.1:8000/api/score-sme", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newSmeInput),
+    });
+
+    if (!response.ok) {
+      throw new Error("Backend scoring failed.");
     }
 
-    setProfiles((currentProfiles) => [...currentProfiles, newSme]);
-    setSelectedSmeId(newSme.smeId);
+    const scoredSme = await response.json();
+
+    setProfiles((currentProfiles) => [...currentProfiles, scoredSme]);
+    setSelectedSmeId(scoredSme.smeId);
     setView("sme");
+  } catch (error) {
+    console.error(error);
+    alert("Could not process SME through backend. Make sure FastAPI is running.");
   }
+}
 
   function resetDemoData() {
     localStorage.removeItem("qfintrust_sme_profiles");
