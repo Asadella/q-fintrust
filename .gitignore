@@ -1,7 +1,8 @@
 node_modules/
 .venv/
+backend/__pycache__/
+__pycache__/
 outputs/
 ganache.log
-__pycache__/
 .ipynb_checkpoints/
 .env

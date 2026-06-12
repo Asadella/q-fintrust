@@ -14,25 +14,38 @@ const emptyForm = {
   employees: "",
   latePayments12m: "",
   esgScore: "",
+  financialDocsScore: "",
+  cashFlowStability: "",
+  revenueVolatility: "",
+  creditUtilization: "",
 };
 
-export default function AddSmeForm({ onAddSme }) {
+const numericFields = [
+  "annualRevenue",
+  "annualIncome",
+  "monthlyRevenue",
+  "revenueGrowthRate",
+  "loanAmount",
+  "debtToIncomeRatio",
+  "businessAgeMonths",
+  "employees",
+  "latePayments12m",
+  "esgScore",
+  "financialDocsScore",
+  "cashFlowStability",
+  "revenueVolatility",
+  "creditUtilization",
+];
+
+export default function AddSmeForm({ onAddSme, isSubmitting = false }) {
   const [formData, setFormData] = useState(emptyForm);
 
   function handleChange(event) {
     const { name, value } = event.target;
 
-    const numericFields = [
-      "creditScore",
-      "defaultProbability",
-      "readinessScore",
-      "esgScore",
-      "compositeScore"
-    ];
-
     setFormData((current) => ({
       ...current,
-      [name]: numericFields.includes(name) ? Number(value) : value
+      [name]: numericFields.includes(name) ? Number(value) : value,
     }));
   }
 
@@ -50,9 +63,12 @@ export default function AddSmeForm({ onAddSme }) {
 
   return (
     <section className="panel">
+      <p className="eyebrow">Add SME</p>
       <h3>Add New SME Data</h3>
       <p className="muted">
-        Add a new SME profile to test the frontend dashboard. This is saved in browser local storage.
+        Enter raw SME business and financial data. The backend calculates credit score,
+        readiness score, risk tier, fraud/anomaly flags, loan decision, forecast,
+        and recommendations automatically.
       </p>
 
       <form className="smeForm" onSubmit={handleSubmit}>
@@ -63,7 +79,7 @@ export default function AddSmeForm({ onAddSme }) {
               name="smeId"
               value={formData.smeId}
               onChange={handleChange}
-              placeholder="SME_004"
+              placeholder="SME_00101"
             />
           </label>
 
@@ -73,160 +89,199 @@ export default function AddSmeForm({ onAddSme }) {
               name="businessName"
               value={formData.businessName}
               onChange={handleChange}
-              placeholder="Delta Foods Ltd."
+              placeholder="Example Retail Co."
             />
           </label>
 
           <label>
             Sector
+            <select name="sector" value={formData.sector} onChange={handleChange}>
+              <option value="">Select sector</option>
+              <option value="Retail">Retail</option>
+              <option value="Manufacturing">Manufacturing</option>
+              <option value="FinTech">FinTech</option>
+              <option value="Healthcare">Healthcare</option>
+              <option value="Food">Food</option>
+              <option value="Logistics">Logistics</option>
+              <option value="AgriTech">AgriTech</option>
+              <option value="Textile">Textile</option>
+              <option value="Technology">Technology</option>
+              <option value="Services">Services</option>
+            </select>
+          </label>
+
+          <label>
+            Annual Revenue
             <input
-              name="sector"
-              value={formData.sector}
+              type="number"
+              name="annualRevenue"
+              value={formData.annualRevenue}
               onChange={handleChange}
-              placeholder="Retail, Tech, Manufacturing..."
+              placeholder="500000"
             />
           </label>
 
           <label>
-            Credit Score
+            Annual Income
             <input
               type="number"
-              name="creditScore"
-              value={formData.creditScore}
+              name="annualIncome"
+              value={formData.annualIncome}
               onChange={handleChange}
-              min="300"
-              max="1000"
+              placeholder="80000"
             />
           </label>
 
           <label>
-            Default Probability
+            Monthly Revenue
             <input
               type="number"
-              name="defaultProbability"
-              value={formData.defaultProbability}
+              name="monthlyRevenue"
+              value={formData.monthlyRevenue}
               onChange={handleChange}
-              min="0"
-              max="1"
+              placeholder="42000"
+            />
+          </label>
+
+          <label>
+            Revenue Growth Rate
+            <input
+              type="number"
               step="0.01"
+              name="revenueGrowthRate"
+              value={formData.revenueGrowthRate}
+              onChange={handleChange}
+              placeholder="0.08"
             />
           </label>
 
           <label>
-            Risk Tier
-            <select name="riskTier" value={formData.riskTier} onChange={handleChange}>
-              <option>Very Low</option>
-              <option>Low</option>
-              <option>Medium</option>
-              <option>High</option>
-              <option>Very High</option>
-            </select>
-          </label>
-
-          <label>
-            Readiness Score
+            Loan Amount
             <input
               type="number"
-              name="readinessScore"
-              value={formData.readinessScore}
+              name="loanAmount"
+              value={formData.loanAmount}
               onChange={handleChange}
-              min="0"
-              max="100"
+              placeholder="100000"
             />
           </label>
 
           <label>
-            Readiness Tier
-            <select
-              name="readinessTier"
-              value={formData.readinessTier}
+            Debt-to-Income Ratio
+            <input
+              type="number"
+              step="0.01"
+              name="debtToIncomeRatio"
+              value={formData.debtToIncomeRatio}
               onChange={handleChange}
-            >
-              <option>Investment Ready</option>
-              <option>Developing</option>
-              <option>Pre-Readiness</option>
-              <option>Not Ready</option>
-            </select>
+              placeholder="0.45"
+            />
           </label>
 
           <label>
-            Loan Decision
-            <select
-              name="loanDecision"
-              value={formData.loanDecision}
+            Business Age Months
+            <input
+              type="number"
+              name="businessAgeMonths"
+              value={formData.businessAgeMonths}
               onChange={handleChange}
-            >
-              <option>APPROVE</option>
-              <option>CONDITIONAL REVIEW</option>
-              <option>REJECT</option>
-            </select>
+              placeholder="36"
+            />
           </label>
 
           <label>
-            Fraud Flag
-            <select name="fraudFlag" value={formData.fraudFlag} onChange={handleChange}>
-              <option>No</option>
-              <option>Yes</option>
-            </select>
-          </label>
-
-          <label>
-            Anomaly Flag
-            <select name="anomalyFlag" value={formData.anomalyFlag} onChange={handleChange}>
-              <option>No</option>
-              <option>Yes</option>
-            </select>
-          </label>
-
-          <label>
-            Blockchain Verified
-            <select
-              name="blockchainVerified"
-              value={formData.blockchainVerified}
+            Employees
+            <input
+              type="number"
+              name="employees"
+              value={formData.employees}
               onChange={handleChange}
-            >
-              <option>No</option>
-              <option>Yes</option>
-            </select>
+              placeholder="12"
+            />
+          </label>
+
+          <label>
+            Late Payments Last 12 Months
+            <input
+              type="number"
+              name="latePayments12m"
+              value={formData.latePayments12m}
+              onChange={handleChange}
+              placeholder="1"
+            />
           </label>
 
           <label>
             ESG Score
             <input
               type="number"
+              min="0"
+              max="100"
               name="esgScore"
               value={formData.esgScore}
               onChange={handleChange}
-              min="0"
-              max="100"
+              placeholder="70"
             />
           </label>
 
           <label>
-            ESG Tier
-            <select name="esgTier" value={formData.esgTier} onChange={handleChange}>
-              <option>ESG Leader</option>
-              <option>ESG Compliant</option>
-              <option>ESG Developing</option>
-              <option>ESG Risk</option>
-            </select>
+            Financial Docs Score
+            <input
+              type="number"
+              min="0"
+              max="100"
+              name="financialDocsScore"
+              value={formData.financialDocsScore}
+              onChange={handleChange}
+              placeholder="75"
+            />
           </label>
 
           <label>
-            Composite Score
+            Cash Flow Stability
             <input
               type="number"
-              name="compositeScore"
-              value={formData.compositeScore}
-              onChange={handleChange}
+              step="0.01"
               min="0"
-              max="100"
+              max="1"
+              name="cashFlowStability"
+              value={formData.cashFlowStability}
+              onChange={handleChange}
+              placeholder="0.70"
+            />
+          </label>
+
+          <label>
+            Revenue Volatility
+            <input
+              type="number"
+              step="0.01"
+              min="0"
+              max="1"
+              name="revenueVolatility"
+              value={formData.revenueVolatility}
+              onChange={handleChange}
+              placeholder="0.25"
+            />
+          </label>
+
+          <label>
+            Credit Utilization
+            <input
+              type="number"
+              step="0.01"
+              min="0"
+              max="1"
+              name="creditUtilization"
+              value={formData.creditUtilization}
+              onChange={handleChange}
+              placeholder="0.40"
             />
           </label>
         </div>
 
-        <button className="primaryButton" type="submit">
-          Add SME to Dashboard
+        <button className="primaryButton" type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Processing SME..." : "Send SME to Backend"}
         </button>
       </form>
     </section>
