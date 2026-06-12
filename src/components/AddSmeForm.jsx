@@ -285,7 +285,7 @@ export default function AddSmeForm({ onAddSme, isSubmitting = false }) {
         </div>
 
         <button className="primaryButton" type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Processing SME..." : "Send SME to Backend"}
+          {isSubmitting ? "Processing SME..." : "Send SME"}
         </button>
       </form>
     </section>
