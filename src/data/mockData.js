@@ -15,7 +15,107 @@ export const smeProfiles = [
     esgScore: 74,
     esgTier: "ESG Compliant",
     rbacStatus: "SME access only / Investor consent required",
-    compositeScore: 82
+    compositeScore: 82,
+    readinessBreakdown: [
+      { dimension: "Financial Documentation", score: 80 },
+      { dimension: "Business Maturity", score: 74 },
+      { dimension: "Growth Trajectory", score: 82 },
+      { dimension: "Governance & Structure", score: 70 },
+      { dimension: "Debt Management", score: 76 },
+    ],
+    forecastData: [
+      { month: "Jan", readiness: 78, revenue: 52000 },
+      { month: "Feb", readiness: 79, revenue: 53500 },
+      { month: "Mar", readiness: 79, revenue: 54800 },
+      { month: "Apr", readiness: 80, revenue: 56000 },
+      { month: "May", readiness: 81, revenue: 57500 },
+      { month: "Jun", readiness: 82, revenue: 59000 },
+      { month: "Jul", readiness: 82, revenue: 60400 },
+      { month: "Aug", readiness: 83, revenue: 62000 },
+      { month: "Sep", readiness: 84, revenue: 64000 },
+      { month: "Oct", readiness: 85, revenue: 65700 },
+      { month: "Nov", readiness: 85, revenue: 67200 },
+      { month: "Dec", readiness: 86, revenue: 69000 },
+    ],
+    shapSummary: [
+      { factor: "Debt-to-income ratio", value: 0.42, effect: "Decreases risk" },
+      { factor: "Late payments in 12 months", value: 1, effect: "Increases risk" },
+      { factor: "Cash flow stability", value: 0.78, effect: "Decreases risk" },
+      { factor: "Revenue volatility", value: 0.21, effect: "Decreases risk" },
+      { factor: "Credit utilization", value: 0.36, effect: "Decreases risk" },
+    ],
+    improvementPlan: [
+      {
+        problem: "Moderate leverage",
+        rootCause: "Debt-to-income ratio is close to upper target",
+        recommendation: "Reduce short-term liabilities and increase recurring revenue",
+        targetMetric: "DTI <= 0.45",
+      },
+      {
+        problem: "Documentation gap",
+        rootCause: "Only partial audited financial documents available",
+        recommendation: "Prepare audited financial statements for the last 2 fiscal years",
+        targetMetric: "Documentation score >= 75",
+      },
+      {
+        problem: "Payment history risk",
+        rootCause: "One late payment detected in the last 12 months",
+        recommendation: "Automate invoice reminders and improve payment cycle control",
+        targetMetric: "0 late payments in next 6 months",
+      },
+    ],
+    loanMatches: [
+      {
+        rank: 1,
+        lender: "Bank A",
+        loanType: "SME Working Capital Loan",
+        approvalProbability: "84%",
+        interestRate: "8.5% p.a.",
+        maxAmount: "$150,000",
+      },
+      {
+        rank: 2,
+        lender: "FinTech B",
+        loanType: "Revenue-Based Financing",
+        approvalProbability: "76%",
+        interestRate: "11.0% p.a.",
+        maxAmount: "$100,000",
+      },
+      {
+        rank: 3,
+        lender: "MFI C",
+        loanType: "Retail SME Support Loan",
+        approvalProbability: "69%",
+        interestRate: "13.5% p.a.",
+        maxAmount: "$50,000",
+      },
+    ],
+    investorMatches: [
+      {
+        rank: 1,
+        investorType: "Impact Investment Fund",
+        investmentRange: "$100K–$500K",
+        matchScore: "76%",
+        riskAppetite: "Medium",
+        preferredSectors: "Retail, ESG-focused SMEs",
+      },
+      {
+        rank: 2,
+        investorType: "Angel Investor Network",
+        investmentRange: "$50K–$200K",
+        matchScore: "69%",
+        riskAppetite: "High",
+        preferredSectors: "Retail, Technology",
+      },
+      {
+        rank: 3,
+        investorType: "Development Finance Institution",
+        investmentRange: "$200K–$1M",
+        matchScore: "62%",
+        riskAppetite: "Low",
+        preferredSectors: "All sectors, inclusive finance",
+      },
+    ],
   },
   {
     smeId: "SME_002",
@@ -33,7 +133,107 @@ export const smeProfiles = [
     esgScore: 52,
     esgTier: "ESG Developing",
     rbacStatus: "Investor view restricted",
-    compositeScore: 61
+    compositeScore: 61,
+    readinessBreakdown: [
+      { dimension: "Financial Documentation", score: 60 },
+      { dimension: "Business Maturity", score: 65 },
+      { dimension: "Growth Trajectory", score: 55 },
+      { dimension: "Governance & Structure", score: 52 },
+      { dimension: "Debt Management", score: 48 },
+    ],
+    forecastData: [
+      { month: "Jan", readiness: 58, revenue: 31000 },
+      { month: "Feb", readiness: 59, revenue: 31400 },
+      { month: "Mar", readiness: 60, revenue: 31800 },
+      { month: "Apr", readiness: 60, revenue: 32200 },
+      { month: "May", readiness: 61, revenue: 32700 },
+      { month: "Jun", readiness: 62, revenue: 33200 },
+      { month: "Jul", readiness: 62, revenue: 33700 },
+      { month: "Aug", readiness: 63, revenue: 34200 },
+      { month: "Sep", readiness: 64, revenue: 34800 },
+      { month: "Oct", readiness: 65, revenue: 35400 },
+      { month: "Nov", readiness: 65, revenue: 36000 },
+      { month: "Dec", readiness: 66, revenue: 36600 },
+    ],
+    shapSummary: [
+      { factor: "Debt-to-income ratio", value: 0.78, effect: "Increases risk" },
+      { factor: "Late payments in 12 months", value: 3, effect: "Increases risk" },
+      { factor: "Cash flow stability", value: 0.52, effect: "Increases risk" },
+      { factor: "Revenue volatility", value: 0.58, effect: "Increases risk" },
+      { factor: "Credit utilization", value: 0.71, effect: "Increases risk" },
+    ],
+    improvementPlan: [
+      {
+        problem: "Debt pressure",
+        rootCause: "High DTI and elevated credit utilization weaken credit profile",
+        recommendation: "Reduce short-term liabilities and keep credit utilization below 60%",
+        targetMetric: "DTI <= 0.45 and utilization <= 0.60",
+      },
+      {
+        problem: "Anomaly flags detected",
+        rootCause: "3 late payments and high revenue volatility triggered anomaly flag",
+        recommendation: "Establish automated payment schedules and diversify revenue streams",
+        targetMetric: "0 late payments, volatility < 0.45",
+      },
+      {
+        problem: "Financial documentation gap",
+        rootCause: "Incomplete documentation reduces lender confidence",
+        recommendation: "Prepare audited financial statements and monthly cash-flow reports",
+        targetMetric: "Documentation score >= 75",
+      },
+    ],
+    loanMatches: [
+      {
+        rank: 1,
+        lender: "Bank A",
+        loanType: "SME Working Capital Loan",
+        approvalProbability: "67%",
+        interestRate: "11.5% p.a.",
+        maxAmount: "$120,000",
+      },
+      {
+        rank: 2,
+        lender: "FinTech B",
+        loanType: "Revenue-Based Financing",
+        approvalProbability: "61%",
+        interestRate: "14.0% p.a.",
+        maxAmount: "$80,000",
+      },
+      {
+        rank: 3,
+        lender: "MFI C",
+        loanType: "Manufacturing SME Support Loan",
+        approvalProbability: "54%",
+        interestRate: "17.0% p.a.",
+        maxAmount: "$40,000",
+      },
+    ],
+    investorMatches: [
+      {
+        rank: 1,
+        investorType: "Impact Investment Fund",
+        investmentRange: "$100K–$500K",
+        matchScore: "55%",
+        riskAppetite: "Medium",
+        preferredSectors: "Manufacturing, ESG-focused SMEs",
+      },
+      {
+        rank: 2,
+        investorType: "Angel Investor Network",
+        investmentRange: "$50K–$200K",
+        matchScore: "49%",
+        riskAppetite: "High",
+        preferredSectors: "Manufacturing, Retail, Technology",
+      },
+      {
+        rank: 3,
+        investorType: "Development Finance Institution",
+        investmentRange: "$200K–$1M",
+        matchScore: "41%",
+        riskAppetite: "Medium",
+        preferredSectors: "All sectors, inclusive finance",
+      },
+    ],
   },
   {
     smeId: "SME_003",
@@ -51,16 +251,117 @@ export const smeProfiles = [
     esgScore: 83,
     esgTier: "ESG Leader",
     rbacStatus: "Consent granted to matched investors",
-    compositeScore: 91
-  }
+    compositeScore: 91,
+    readinessBreakdown: [
+      { dimension: "Financial Documentation", score: 90 },
+      { dimension: "Business Maturity", score: 85 },
+      { dimension: "Growth Trajectory", score: 88 },
+      { dimension: "Governance & Structure", score: 84 },
+      { dimension: "Debt Management", score: 87 },
+    ],
+    forecastData: [
+      { month: "Jan", readiness: 86, revenue: 78000 },
+      { month: "Feb", readiness: 87, revenue: 80000 },
+      { month: "Mar", readiness: 87, revenue: 82500 },
+      { month: "Apr", readiness: 88, revenue: 85000 },
+      { month: "May", readiness: 89, revenue: 87500 },
+      { month: "Jun", readiness: 89, revenue: 90000 },
+      { month: "Jul", readiness: 90, revenue: 92500 },
+      { month: "Aug", readiness: 91, revenue: 95000 },
+      { month: "Sep", readiness: 91, revenue: 98000 },
+      { month: "Oct", readiness: 92, revenue: 101000 },
+      { month: "Nov", readiness: 93, revenue: 104000 },
+      { month: "Dec", readiness: 93, revenue: 107000 },
+    ],
+    shapSummary: [
+      { factor: "Debt-to-income ratio", value: 0.22, effect: "Decreases risk" },
+      { factor: "Late payments in 12 months", value: 0, effect: "Decreases risk" },
+      { factor: "Cash flow stability", value: 0.91, effect: "Decreases risk" },
+      { factor: "Revenue volatility", value: 0.12, effect: "Decreases risk" },
+      { factor: "Credit utilization", value: 0.28, effect: "Decreases risk" },
+    ],
+    improvementPlan: [
+      {
+        problem: "ESG reporting depth",
+        rootCause: "ESG score is strong but formal third-party audit not completed",
+        recommendation: "Commission an independent ESG audit to unlock top-tier investor access",
+        targetMetric: "ESG score >= 90 with audit certificate",
+      },
+      {
+        problem: "Geographic diversification",
+        rootCause: "Revenue concentrated in one market segment",
+        recommendation: "Expand service offering to adjacent sectors to reduce concentration risk",
+        targetMetric: "No single segment > 60% of revenue",
+      },
+      {
+        problem: "Blockchain verification",
+        rootCause: "On-chain anchoring is verified but not yet fully automated",
+        recommendation: "Integrate smart contract triggers for real-time financial data anchoring",
+        targetMetric: "100% automated blockchain verification",
+      },
+    ],
+    loanMatches: [
+      {
+        rank: 1,
+        lender: "Bank A",
+        loanType: "SME Working Capital Loan",
+        approvalProbability: "84%",
+        interestRate: "8.5% p.a.",
+        maxAmount: "$210,000",
+      },
+      {
+        rank: 2,
+        lender: "FinTech B",
+        loanType: "Revenue-Based Financing",
+        approvalProbability: "76%",
+        interestRate: "11.0% p.a.",
+        maxAmount: "$140,000",
+      },
+      {
+        rank: 3,
+        lender: "MFI C",
+        loanType: "Technology SME Support Loan",
+        approvalProbability: "69%",
+        interestRate: "13.5% p.a.",
+        maxAmount: "$70,000",
+      },
+    ],
+    investorMatches: [
+      {
+        rank: 1,
+        investorType: "Impact Investment Fund",
+        investmentRange: "$100K–$500K",
+        matchScore: "91%",
+        riskAppetite: "Medium",
+        preferredSectors: "Technology, ESG-focused SMEs",
+      },
+      {
+        rank: 2,
+        investorType: "Angel Investor Network",
+        investmentRange: "$50K–$200K",
+        matchScore: "84%",
+        riskAppetite: "High",
+        preferredSectors: "Technology, Retail, FinTech",
+      },
+      {
+        rank: 3,
+        investorType: "Development Finance Institution",
+        investmentRange: "$200K–$1M",
+        matchScore: "78%",
+        riskAppetite: "Low",
+        preferredSectors: "All sectors, inclusive finance",
+      },
+    ],
+  },
 ];
 
+// Generic fallback arrays (used only if an SME profile has no inline data)
 export const readinessBreakdown = [
   { dimension: "Financial Documentation", score: 80 },
   { dimension: "Business Maturity", score: 74 },
   { dimension: "Growth Trajectory", score: 82 },
   { dimension: "Governance & Structure", score: 70 },
-  { dimension: "Debt Management", score: 76 }
+  { dimension: "Debt Management", score: 76 },
 ];
 
 export const forecastData = [
@@ -75,35 +376,15 @@ export const forecastData = [
   { month: "Sep", readiness: 84, revenue: 64000 },
   { month: "Oct", readiness: 85, revenue: 65700 },
   { month: "Nov", readiness: 85, revenue: 67200 },
-  { month: "Dec", readiness: 86, revenue: 69000 }
+  { month: "Dec", readiness: 86, revenue: 69000 },
 ];
 
 export const shapSummary = [
-  {
-    factor: "Debt-to-income ratio",
-    value: "0.42",
-    effect: "Decreases risk"
-  },
-  {
-    factor: "Late payments in 12 months",
-    value: "1",
-    effect: "Slightly increases risk"
-  },
-  {
-    factor: "Cash flow stability",
-    value: "0.78",
-    effect: "Decreases risk"
-  },
-  {
-    factor: "Revenue volatility",
-    value: "0.21",
-    effect: "Decreases risk"
-  },
-  {
-    factor: "Credit utilization",
-    value: "0.36",
-    effect: "Decreases risk"
-  }
+  { factor: "Debt-to-income ratio", value: 0.42, effect: "Decreases risk" },
+  { factor: "Late payments in 12 months", value: 1, effect: "Increases risk" },
+  { factor: "Cash flow stability", value: 0.78, effect: "Decreases risk" },
+  { factor: "Revenue volatility", value: 0.21, effect: "Decreases risk" },
+  { factor: "Credit utilization", value: 0.36, effect: "Decreases risk" },
 ];
 
 export const improvementPlan = [
@@ -111,20 +392,20 @@ export const improvementPlan = [
     problem: "Moderate leverage",
     rootCause: "Debt-to-income ratio is close to upper target",
     recommendation: "Reduce short-term liabilities and increase recurring revenue",
-    targetMetric: "DTI <= 0.45"
+    targetMetric: "DTI <= 0.45",
   },
   {
     problem: "Documentation gap",
     rootCause: "Only partial audited financial documents available",
     recommendation: "Prepare audited financial statements for the last 2 fiscal years",
-    targetMetric: "Documentation score >= 75"
+    targetMetric: "Documentation score >= 75",
   },
   {
     problem: "Payment history risk",
     rootCause: "One late payment detected in the last 12 months",
     recommendation: "Automate invoice reminders and improve payment cycle control",
-    targetMetric: "0 late payments in next 6 months"
-  }
+    targetMetric: "0 late payments in next 6 months",
+  },
 ];
 
 export const loanMatches = [
@@ -134,7 +415,7 @@ export const loanMatches = [
     loanType: "SME Working Capital Loan",
     approvalProbability: "82%",
     interestRate: "8.5% p.a.",
-    maxAmount: "$500,000"
+    maxAmount: "$500,000",
   },
   {
     rank: 2,
@@ -142,7 +423,7 @@ export const loanMatches = [
     loanType: "Revenue-Based Financing",
     approvalProbability: "74%",
     interestRate: "12% p.a.",
-    maxAmount: "$200,000"
+    maxAmount: "$200,000",
   },
   {
     rank: 3,
@@ -150,33 +431,33 @@ export const loanMatches = [
     loanType: "Microfinance SME Loan",
     approvalProbability: "68%",
     interestRate: "15% p.a.",
-    maxAmount: "$50,000"
-  }
+    maxAmount: "$50,000",
+  },
 ];
 
 export const investorMatches = [
   {
     rank: 1,
     investorType: "Impact Investment Fund",
-    investmentRange: "$100K-$500K",
+    investmentRange: "$100K–$500K",
     matchScore: "91%",
     riskAppetite: "Medium",
-    preferredSectors: "Tech, Agriculture, Services"
+    preferredSectors: "Tech, Agriculture, Services",
   },
   {
     rank: 2,
     investorType: "Angel Investor Network",
-    investmentRange: "$50K-$200K",
+    investmentRange: "$50K–$200K",
     matchScore: "84%",
     riskAppetite: "High",
-    preferredSectors: "Tech, Retail, Manufacturing"
+    preferredSectors: "Tech, Retail, Manufacturing",
   },
   {
     rank: 3,
     investorType: "Development Finance Institution",
-    investmentRange: "$200K-$1M",
+    investmentRange: "$200K–$1M",
     matchScore: "76%",
     riskAppetite: "Low",
-    preferredSectors: "All sectors, ESG-focused"
-  }
+    preferredSectors: "All sectors, ESG-focused",
+  },
 ];

@@ -1,8 +1,22 @@
 node_modules/
+dist/
 .venv/
 backend/__pycache__/
 __pycache__/
 outputs/
+
+# Blockchain local testnet logs
 ganache.log
+src/ganache.log
+
+# Jupyter
 .ipynb_checkpoints/
+*.ipynb_checkpoints/
+
+# Environment
 .env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db

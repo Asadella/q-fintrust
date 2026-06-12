@@ -247,12 +247,14 @@ def score_sme(raw):
     )
 
     normalized_credit = ((credit_score - 300) / 550) * 100
+    # governance_score combines financial documentation quality and ESG standing
+    governance_score = (financial_docs_score + esg_score) / 2
     composite_score = int(
         clamp(
             0.35 * readiness_score
             + 0.30 * normalized_credit
             + 0.20 * esg_score
-            + 0.15 * 60,
+            + 0.15 * governance_score,
             0,
             100,
         )
@@ -263,6 +265,7 @@ def score_sme(raw):
     if anomaly_flag == "Yes":
         composite_score = max(0, composite_score - 10)
 
+    # PD base: 0.0 at credit=850, 1.0 at credit=300; risk flags add penalty (clamped to [0, 1])
     default_probability = round(
         clamp(
             1
