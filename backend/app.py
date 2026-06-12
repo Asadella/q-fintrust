@@ -3,7 +3,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from scoring import score_sme
 
-
 app = FastAPI(title="Q-FinTrust Backend")
 
 
@@ -47,8 +46,9 @@ def root():
     return {
         "message": "Q-FinTrust backend is running",
         "health": "/api/health",
-        "docs": "/docs"
+        "docs": "/docs",
     }
+
 
 @app.get("/api/health")
 def health():

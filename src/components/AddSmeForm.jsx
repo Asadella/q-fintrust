@@ -66,9 +66,9 @@ export default function AddSmeForm({ onAddSme, isSubmitting = false }) {
       <p className="eyebrow">Add SME</p>
       <h3>Add New SME Data</h3>
       <p className="muted">
-        Enter raw SME business and financial data. The backend calculates credit score,
-        readiness score, risk tier, fraud/anomaly flags, loan decision, forecast,
-        and recommendations automatically.
+        Enter raw SME business and financial data. The backend calculates credit
+        score, readiness score, risk tier, fraud/anomaly flags, loan decision,
+        forecast, and recommendations automatically.
       </p>
 
       <form className="smeForm" onSubmit={handleSubmit}>
@@ -95,7 +95,11 @@ export default function AddSmeForm({ onAddSme, isSubmitting = false }) {
 
           <label>
             Sector
-            <select name="sector" value={formData.sector} onChange={handleChange}>
+            <select
+              name="sector"
+              value={formData.sector}
+              onChange={handleChange}
+            >
               <option value="">Select sector</option>
               <option value="Retail">Retail</option>
               <option value="Manufacturing">Manufacturing</option>

@@ -39,7 +39,11 @@ export const smeProfiles = [
     ],
     shapSummary: [
       { factor: "Debt-to-income ratio", value: 0.42, effect: "Decreases risk" },
-      { factor: "Late payments in 12 months", value: 1, effect: "Increases risk" },
+      {
+        factor: "Late payments in 12 months",
+        value: 1,
+        effect: "Increases risk",
+      },
       { factor: "Cash flow stability", value: 0.78, effect: "Decreases risk" },
       { factor: "Revenue volatility", value: 0.21, effect: "Decreases risk" },
       { factor: "Credit utilization", value: 0.36, effect: "Decreases risk" },
@@ -48,19 +52,22 @@ export const smeProfiles = [
       {
         problem: "Moderate leverage",
         rootCause: "Debt-to-income ratio is close to upper target",
-        recommendation: "Reduce short-term liabilities and increase recurring revenue",
+        recommendation:
+          "Reduce short-term liabilities and increase recurring revenue",
         targetMetric: "DTI <= 0.45",
       },
       {
         problem: "Documentation gap",
         rootCause: "Only partial audited financial documents available",
-        recommendation: "Prepare audited financial statements for the last 2 fiscal years",
+        recommendation:
+          "Prepare audited financial statements for the last 2 fiscal years",
         targetMetric: "Documentation score >= 75",
       },
       {
         problem: "Payment history risk",
         rootCause: "One late payment detected in the last 12 months",
-        recommendation: "Automate invoice reminders and improve payment cycle control",
+        recommendation:
+          "Automate invoice reminders and improve payment cycle control",
         targetMetric: "0 late payments in next 6 months",
       },
     ],
@@ -157,7 +164,11 @@ export const smeProfiles = [
     ],
     shapSummary: [
       { factor: "Debt-to-income ratio", value: 0.78, effect: "Increases risk" },
-      { factor: "Late payments in 12 months", value: 3, effect: "Increases risk" },
+      {
+        factor: "Late payments in 12 months",
+        value: 3,
+        effect: "Increases risk",
+      },
       { factor: "Cash flow stability", value: 0.52, effect: "Increases risk" },
       { factor: "Revenue volatility", value: 0.58, effect: "Increases risk" },
       { factor: "Credit utilization", value: 0.71, effect: "Increases risk" },
@@ -165,20 +176,25 @@ export const smeProfiles = [
     improvementPlan: [
       {
         problem: "Debt pressure",
-        rootCause: "High DTI and elevated credit utilization weaken credit profile",
-        recommendation: "Reduce short-term liabilities and keep credit utilization below 60%",
+        rootCause:
+          "High DTI and elevated credit utilization weaken credit profile",
+        recommendation:
+          "Reduce short-term liabilities and keep credit utilization below 60%",
         targetMetric: "DTI <= 0.45 and utilization <= 0.60",
       },
       {
         problem: "Anomaly flags detected",
-        rootCause: "3 late payments and high revenue volatility triggered anomaly flag",
-        recommendation: "Establish automated payment schedules and diversify revenue streams",
+        rootCause:
+          "3 late payments and high revenue volatility triggered anomaly flag",
+        recommendation:
+          "Establish automated payment schedules and diversify revenue streams",
         targetMetric: "0 late payments, volatility < 0.45",
       },
       {
         problem: "Financial documentation gap",
         rootCause: "Incomplete documentation reduces lender confidence",
-        recommendation: "Prepare audited financial statements and monthly cash-flow reports",
+        recommendation:
+          "Prepare audited financial statements and monthly cash-flow reports",
         targetMetric: "Documentation score >= 75",
       },
     ],
@@ -275,7 +291,11 @@ export const smeProfiles = [
     ],
     shapSummary: [
       { factor: "Debt-to-income ratio", value: 0.22, effect: "Decreases risk" },
-      { factor: "Late payments in 12 months", value: 0, effect: "Decreases risk" },
+      {
+        factor: "Late payments in 12 months",
+        value: 0,
+        effect: "Decreases risk",
+      },
       { factor: "Cash flow stability", value: 0.91, effect: "Decreases risk" },
       { factor: "Revenue volatility", value: 0.12, effect: "Decreases risk" },
       { factor: "Credit utilization", value: 0.28, effect: "Decreases risk" },
@@ -283,20 +303,24 @@ export const smeProfiles = [
     improvementPlan: [
       {
         problem: "ESG reporting depth",
-        rootCause: "ESG score is strong but formal third-party audit not completed",
-        recommendation: "Commission an independent ESG audit to unlock top-tier investor access",
+        rootCause:
+          "ESG score is strong but formal third-party audit not completed",
+        recommendation:
+          "Commission an independent ESG audit to unlock top-tier investor access",
         targetMetric: "ESG score >= 90 with audit certificate",
       },
       {
         problem: "Geographic diversification",
         rootCause: "Revenue concentrated in one market segment",
-        recommendation: "Expand service offering to adjacent sectors to reduce concentration risk",
+        recommendation:
+          "Expand service offering to adjacent sectors to reduce concentration risk",
         targetMetric: "No single segment > 60% of revenue",
       },
       {
         problem: "Blockchain verification",
         rootCause: "On-chain anchoring is verified but not yet fully automated",
-        recommendation: "Integrate smart contract triggers for real-time financial data anchoring",
+        recommendation:
+          "Integrate smart contract triggers for real-time financial data anchoring",
         targetMetric: "100% automated blockchain verification",
       },
     ],
@@ -391,19 +415,22 @@ export const improvementPlan = [
   {
     problem: "Moderate leverage",
     rootCause: "Debt-to-income ratio is close to upper target",
-    recommendation: "Reduce short-term liabilities and increase recurring revenue",
+    recommendation:
+      "Reduce short-term liabilities and increase recurring revenue",
     targetMetric: "DTI <= 0.45",
   },
   {
     problem: "Documentation gap",
     rootCause: "Only partial audited financial documents available",
-    recommendation: "Prepare audited financial statements for the last 2 fiscal years",
+    recommendation:
+      "Prepare audited financial statements for the last 2 fiscal years",
     targetMetric: "Documentation score >= 75",
   },
   {
     problem: "Payment history risk",
     rootCause: "One late payment detected in the last 12 months",
-    recommendation: "Automate invoice reminders and improve payment cycle control",
+    recommendation:
+      "Automate invoice reminders and improve payment cycle control",
     targetMetric: "0 late payments in next 6 months",
   },
 ];

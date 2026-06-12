@@ -7,9 +7,14 @@ import {
   ResponsiveContainer,
   Tooltip,
   XAxis,
-  YAxis
+  YAxis,
 } from "recharts";
-import { AlertTriangle, CheckCircle2, LockKeyhole, ShieldCheck } from "lucide-react";
+import {
+  AlertTriangle,
+  CheckCircle2,
+  LockKeyhole,
+  ShieldCheck,
+} from "lucide-react";
 import KpiCard from "./KpiCard.jsx";
 import Table from "./Table.jsx";
 import {
@@ -17,28 +22,28 @@ import {
   improvementPlan,
   loanMatches,
   readinessBreakdown,
-  shapSummary
+  shapSummary,
 } from "../data/mockData.js";
 
 export default function SmeDashboard({ sme }) {
-    const readinessBreakdownData = sme.readinessBreakdown || readinessBreakdown;
-    const forecastDataForSme = sme.forecastData || forecastData;
-    const shapSummaryData = sme.shapSummary || shapSummary;
-    const improvementPlanData = sme.improvementPlan || improvementPlan;
-    const loanMatchesData = sme.loanMatches || loanMatches;
-    const riskTone =
+  const readinessBreakdownData = sme.readinessBreakdown || readinessBreakdown;
+  const forecastDataForSme = sme.forecastData || forecastData;
+  const shapSummaryData = sme.shapSummary || shapSummary;
+  const improvementPlanData = sme.improvementPlan || improvementPlan;
+  const loanMatchesData = sme.loanMatches || loanMatches;
+  const riskTone =
     sme.riskTier === "Very Low" || sme.riskTier === "Low"
       ? "positive"
       : sme.riskTier === "Medium"
-      ? "warning"
-      : "danger";
+        ? "warning"
+        : "danger";
 
   const decisionTone =
     sme.loanDecision === "APPROVE"
       ? "positive"
       : sme.loanDecision === "CONDITIONAL REVIEW"
-      ? "warning"
-      : "danger";
+        ? "warning"
+        : "danger";
 
   return (
     <section className="dashboard">
@@ -54,10 +59,30 @@ export default function SmeDashboard({ sme }) {
       </div>
 
       <div className="kpiGrid">
-        <KpiCard title="Credit Score" value={sme.creditScore} subtitle={sme.riskTier} tone={riskTone} />
-        <KpiCard title="Readiness Score" value={sme.readinessScore} subtitle={sme.readinessTier} tone="positive" />
-        <KpiCard title="ESG Score" value={sme.esgScore} subtitle={sme.esgTier} tone="neutral" />
-        <KpiCard title="Composite Score" value={sme.compositeScore} subtitle="Q-FinTrust score" tone="positive" />
+        <KpiCard
+          title="Credit Score"
+          value={sme.creditScore}
+          subtitle={sme.riskTier}
+          tone={riskTone}
+        />
+        <KpiCard
+          title="Readiness Score"
+          value={sme.readinessScore}
+          subtitle={sme.readinessTier}
+          tone="positive"
+        />
+        <KpiCard
+          title="ESG Score"
+          value={sme.esgScore}
+          subtitle={sme.esgTier}
+          tone="neutral"
+        />
+        <KpiCard
+          title="Composite Score"
+          value={sme.compositeScore}
+          subtitle="Q-FinTrust score"
+          tone="positive"
+        />
       </div>
 
       <div className="statusGrid">
@@ -125,7 +150,7 @@ export default function SmeDashboard({ sme }) {
           columns={[
             { key: "factor", label: "Factor" },
             { key: "value", label: "Value" },
-            { key: "effect", label: "Effect on Risk" }
+            { key: "effect", label: "Effect on Risk" },
           ]}
           rows={shapSummaryData}
         />
@@ -138,7 +163,7 @@ export default function SmeDashboard({ sme }) {
             { key: "problem", label: "Problem" },
             { key: "rootCause", label: "Root Cause" },
             { key: "recommendation", label: "Recommendation" },
-            { key: "targetMetric", label: "Target Metric" }
+            { key: "targetMetric", label: "Target Metric" },
           ]}
           rows={improvementPlanData}
         />
@@ -153,7 +178,7 @@ export default function SmeDashboard({ sme }) {
             { key: "loanType", label: "Loan Type" },
             { key: "approvalProbability", label: "Approval Probability" },
             { key: "interestRate", label: "Interest Rate" },
-            { key: "maxAmount", label: "Max Amount" }
+            { key: "maxAmount", label: "Max Amount" },
           ]}
           rows={loanMatchesData}
         />

@@ -152,7 +152,9 @@ def score_sme(raw):
 
     annual_revenue = to_float(raw.get("annualRevenue"), 0)
     annual_income = to_float(raw.get("annualIncome"), 0)
-    monthly_revenue = to_float(raw.get("monthlyRevenue"), annual_revenue / 12 if annual_revenue else 0)
+    monthly_revenue = to_float(
+        raw.get("monthlyRevenue"), annual_revenue / 12 if annual_revenue else 0
+    )
     revenue_growth_rate = to_float(raw.get("revenueGrowthRate"), 0)
     loan_amount = to_float(raw.get("loanAmount"), 0)
     debt_to_income_ratio = to_float(raw.get("debtToIncomeRatio"), 0)
@@ -161,7 +163,9 @@ def score_sme(raw):
     late_payments = to_int(raw.get("latePayments12m"), 0)
     esg_score = int(clamp(to_float(raw.get("esgScore"), 60), 0, 100))
 
-    financial_docs_score = int(clamp(to_float(raw.get("financialDocsScore"), 60), 0, 100))
+    financial_docs_score = int(
+        clamp(to_float(raw.get("financialDocsScore"), 60), 0, 100)
+    )
     cash_flow_stability = clamp(to_float(raw.get("cashFlowStability"), 0.6), 0, 1)
     revenue_volatility = clamp(to_float(raw.get("revenueVolatility"), 0.3), 0, 1)
     credit_utilization = clamp(to_float(raw.get("creditUtilization"), 0.4), 0, 1)
@@ -188,7 +192,10 @@ def score_sme(raw):
         {"dimension": "Financial Documentation", "score": int(financial_docs_score)},
         {"dimension": "Business Maturity", "score": int(maturity_score)},
         {"dimension": "Growth Trajectory", "score": int(growth_score)},
-        {"dimension": "Governance & Structure", "score": int((employee_score + esg_score) / 2)},
+        {
+            "dimension": "Governance & Structure",
+            "score": int((employee_score + esg_score) / 2),
+        },
         {"dimension": "Debt Management", "score": int(debt_management_score)},
     ]
 
@@ -231,9 +238,7 @@ def score_sme(raw):
     )
 
     fraud_flag = (
-        "Yes"
-        if loan_amount > annual_revenue * 1.5 and annual_revenue > 0
-        else "No"
+        "Yes" if loan_amount > annual_revenue * 1.5 and annual_revenue > 0 else "No"
     )
 
     risk_tier = risk_tier_from_credit(credit_score)
@@ -278,11 +283,26 @@ def score_sme(raw):
         2,
     )
 
-    months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+    ]
     forecast_data = []
     for index, month in enumerate(months):
         projected_readiness = int(clamp(readiness_score + index * 1.2, 0, 100))
-        projected_revenue = monthly_revenue * ((1 + revenue_growth_rate) ** (index / 12))
+        projected_revenue = monthly_revenue * (
+            (1 + revenue_growth_rate) ** (index / 12)
+        )
         forecast_data.append(
             {
                 "month": month,
@@ -295,7 +315,9 @@ def score_sme(raw):
         {
             "factor": "Debt-to-income ratio",
             "value": round(debt_to_income_ratio, 2),
-            "effect": "Increases risk" if debt_to_income_ratio > 0.6 else "Decreases risk",
+            "effect": (
+                "Increases risk" if debt_to_income_ratio > 0.6 else "Decreases risk"
+            ),
         },
         {
             "factor": "Late payments in 12 months",
@@ -305,17 +327,23 @@ def score_sme(raw):
         {
             "factor": "Cash flow stability",
             "value": round(cash_flow_stability, 2),
-            "effect": "Decreases risk" if cash_flow_stability >= 0.6 else "Increases risk",
+            "effect": (
+                "Decreases risk" if cash_flow_stability >= 0.6 else "Increases risk"
+            ),
         },
         {
             "factor": "Revenue volatility",
             "value": round(revenue_volatility, 2),
-            "effect": "Increases risk" if revenue_volatility > 0.45 else "Decreases risk",
+            "effect": (
+                "Increases risk" if revenue_volatility > 0.45 else "Decreases risk"
+            ),
         },
         {
             "factor": "Credit utilization",
             "value": round(credit_utilization, 2),
-            "effect": "Increases risk" if credit_utilization > 0.65 else "Decreases risk",
+            "effect": (
+                "Increases risk" if credit_utilization > 0.65 else "Decreases risk"
+            ),
         },
     ]
 
@@ -361,6 +389,10 @@ def score_sme(raw):
         "forecastData": forecast_data,
         "shapSummary": shap_summary,
         "improvementPlan": improvement_plan,
-        "loanMatches": build_loan_matches(sector, credit_score, readiness_score, loan_amount),
-        "investorMatches": build_investor_matches(sector, risk_tier, esg_score, readiness_score),
+        "loanMatches": build_loan_matches(
+            sector, credit_score, readiness_score, loan_amount
+        ),
+        "investorMatches": build_investor_matches(
+            sector, risk_tier, esg_score, readiness_score
+        ),
     }

@@ -7,7 +7,9 @@ import backendProfiles from "./data/backendProfiles.json";
 import { smeProfiles as demoProfiles } from "./data/mockData.js";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
-const initialProfiles = backendProfiles?.length ? backendProfiles : demoProfiles;
+const initialProfiles = backendProfiles?.length
+  ? backendProfiles
+  : demoProfiles;
 
 export default function App() {
   const [view, setView] = useState("sme");
@@ -56,7 +58,7 @@ export default function App() {
     } catch (error) {
       console.error(error);
       alert(
-        "Could not process SME through backend. Make sure FastAPI is running on http://127.0.0.1:8000."
+        `Could not process SME through backend. Current API URL: ${API_BASE_URL}. Check the backend deployment or Vercel environment variable.`,
       );
     } finally {
       setIsSubmitting(false);

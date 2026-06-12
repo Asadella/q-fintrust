@@ -3,17 +3,26 @@ import csv
 import json
 import sys
 
+
 def main():
     backend_dir = os.path.dirname(os.path.abspath(__file__))
     project_root = os.path.dirname(backend_dir)
-    
+
     # Paths
     github_root = os.path.dirname(project_root)
     raw_csv_path = os.path.join(github_root, "notebooks", "qfintrust_sme_dataset.csv")
-    master_csv_path = os.path.join(github_root, "notebooks", "qfintrust_artifacts", "synthetic_data", "sme_master_dataset.csv")
-    original_json_path = os.path.join(project_root, "src", "data", "backendProfiles.json")
+    master_csv_path = os.path.join(
+        github_root,
+        "notebooks",
+        "qfintrust_artifacts",
+        "synthetic_data",
+        "sme_master_dataset.csv",
+    )
+    original_json_path = os.path.join(
+        project_root, "src", "data", "backendProfiles.json"
+    )
     output_json_path = os.path.join(project_root, "src", "data", "backendProfiles.json")
-    
+
     # 1. Read original verification status to preserve it
     original_verification = {}
     if os.path.exists(original_json_path):
@@ -21,7 +30,9 @@ def main():
             with open(original_json_path, "r", encoding="utf-8") as f:
                 original_data = json.load(f)
                 for profile in original_data:
-                    original_verification[profile["smeId"]] = profile.get("blockchainVerified", "Pending")
+                    original_verification[profile["smeId"]] = profile.get(
+                        "blockchainVerified", "Pending"
+                    )
         except Exception as e:
             print(f"Warning: Could not read original verification status: {e}")
 
@@ -34,7 +45,7 @@ def main():
     if not os.path.exists(raw_csv_path):
         print(f"Error: Raw CSV not found at {raw_csv_path}")
         return
-        
+
     with open(raw_csv_path, "r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         for row in reader:
@@ -49,21 +60,21 @@ def main():
     with open(master_csv_path, "r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         rows = list(reader)[:100]  # First 100 profiles as in original
-        
+
         for row_master in rows:
             sme_id = row_master["businessID"]
             row_raw = raw_data.get(sme_id)
             if not row_raw:
                 print(f"Warning: SME {sme_id} not found in raw dataset. Skipping.")
                 continue
-                
+
             # Document completeness score (float 0.0 to 1.0) scaled to 0-100
             doc_score = float(row_raw["document_completeness_score"]) * 100
-            
+
             # Bank statement consistency score (float 0.0 to 1.0)
             # We map 1.0 - consistency to credit utilization as a reasonable proxy
             credit_util = 1.0 - float(row_raw["bank_statement_consistency_score"])
-            
+
             raw_input = {
                 "smeId": sme_id,
                 "businessName": row_master["businessName"],
@@ -83,20 +94,23 @@ def main():
                 "revenueVolatility": float(row_master["revenueVolatility"]),
                 "creditUtilization": credit_util,
             }
-            
+
             # Score SME using the authoritative backend function
             profile = score_sme(raw_input)
-            
+
             # Restore the original blockchain verification status
             profile["blockchainVerified"] = original_verification.get(sme_id, "Pending")
-            
+
             profiles.append(profile)
 
     # 4. Write back corrected profiles
     with open(output_json_path, "w", encoding="utf-8") as f:
         json.dump(profiles, f, indent=2, ensure_ascii=False)
-        
-    print(f"Success: Corrected and fully-scored {len(profiles)} backend profiles written to {output_json_path}")
+
+    print(
+        f"Success: Corrected and fully-scored {len(profiles)} backend profiles written to {output_json_path}"
+    )
+
 
 if __name__ == "__main__":
     main()
