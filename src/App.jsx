@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Building2, Landmark, PlusCircle, ShieldCheck } from "lucide-react";
 import SmeDashboard from "./components/SmeDashboard.jsx";
 import InvestorDashboard from "./components/InvestorDashboard.jsx";
@@ -7,9 +7,7 @@ import backendProfiles from "./data/backendProfiles.json";
 import { smeProfiles as demoProfiles } from "./data/mockData.js";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
-const initialProfiles = backendProfiles?.length
-  ? backendProfiles
-  : demoProfiles;
+const initialProfiles = backendProfiles?.length ? backendProfiles : demoProfiles;
 
 export default function App() {
   const [view, setView] = useState("sme");
@@ -17,8 +15,10 @@ export default function App() {
     const savedProfiles = localStorage.getItem("qfintrust_sme_profiles");
     return savedProfiles ? JSON.parse(savedProfiles) : initialProfiles;
   });
+
   const [selectedSmeId, setSelectedSmeId] = useState(profiles[0]?.smeId || "");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [smeSearchTerm, setSmeSearchTerm] = useState("");
 
   useEffect(() => {
     localStorage.setItem("qfintrust_sme_profiles", JSON.stringify(profiles));
@@ -26,6 +26,32 @@ export default function App() {
 
   const selectedSme =
     profiles.find((sme) => sme.smeId === selectedSmeId) || profiles[0];
+
+  const sortedProfiles = useMemo(() => {
+    return [...profiles].sort((a, b) =>
+      (a.businessName || "").localeCompare(b.businessName || ""),
+    );
+  }, [profiles]);
+
+  const searchedProfiles = useMemo(() => {
+    const search = smeSearchTerm.trim().toLowerCase();
+
+    if (!search) return sortedProfiles;
+
+    return sortedProfiles.filter((sme) => {
+      return (
+        sme.businessName?.toLowerCase().includes(search) ||
+        sme.smeId?.toLowerCase().includes(search) ||
+        sme.sector?.toLowerCase().includes(search)
+      );
+    });
+  }, [sortedProfiles, smeSearchTerm]);
+
+  const visibleSelectProfiles =
+    selectedSme &&
+    !searchedProfiles.some((sme) => sme.smeId === selectedSme.smeId)
+      ? [selectedSme, ...searchedProfiles]
+      : searchedProfiles;
 
   async function handleAddSme(newSmeInput) {
     const smeExists = profiles.some((sme) => sme.smeId === newSmeInput.smeId);
@@ -54,6 +80,7 @@ export default function App() {
 
       setProfiles((currentProfiles) => [...currentProfiles, result]);
       setSelectedSmeId(result.smeId);
+      setSmeSearchTerm("");
       setView("sme");
     } catch (error) {
       console.error(error);
@@ -69,6 +96,7 @@ export default function App() {
     localStorage.removeItem("qfintrust_sme_profiles");
     setProfiles(initialProfiles);
     setSelectedSmeId(initialProfiles[0]?.smeId || "");
+    setSmeSearchTerm("");
   }
 
   return (
@@ -112,16 +140,36 @@ export default function App() {
 
         <div className="sidebarCard">
           <label>Selected SME</label>
+
+          <input
+            className="smeSearchInput"
+            value={smeSearchTerm}
+            onChange={(event) => setSmeSearchTerm(event.target.value)}
+            placeholder="Search name, ID, or sector..."
+          />
+
           <select
             value={selectedSme?.smeId || ""}
             onChange={(event) => setSelectedSmeId(event.target.value)}
           >
-            {profiles.map((sme) => (
+            {visibleSelectProfiles.map((sme) => (
               <option key={sme.smeId} value={sme.smeId}>
-                {sme.businessName}
+                {sme.businessName} — {sme.smeId}
               </option>
             ))}
           </select>
+
+          <p className="selectHint">{searchedProfiles.length} matching SMEs</p>
+
+          {smeSearchTerm && (
+            <button
+              className="clearSearchButton"
+              type="button"
+              onClick={() => setSmeSearchTerm("")}
+            >
+              Clear search
+            </button>
+          )}
         </div>
 
         <button className="resetButton" onClick={resetDemoData}>
