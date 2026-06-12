@@ -1,3 +1,4 @@
+import { useMemo, useState } from "react";
 import {
   Bar,
   BarChart,
@@ -55,10 +56,33 @@ function buildInvestorMatches(sme) {
 }
 
 export default function InvestorDashboard({ profiles }) {
-  const rankedProfiles = [...profiles].sort(
-    (a, b) => Number(b.compositeScore || 0) - Number(a.compositeScore || 0)
-  );
+  const [searchTerm, setSearchTerm] = useState("");
+  const [decisionFilter, setDecisionFilter] = useState("All");
+  const [visibleCount, setVisibleCount] = useState(10);
 
+  const rankedProfiles = useMemo(() => {
+    return [...profiles].sort(
+      (a, b) => Number(b.compositeScore || 0) - Number(a.compositeScore || 0)
+    );
+  }, [profiles]);
+
+  const filteredProfiles = useMemo(() => {
+    return rankedProfiles.filter((sme) => {
+      const search = searchTerm.toLowerCase();
+
+      const matchesSearch =
+        sme.smeId?.toLowerCase().includes(search) ||
+        sme.businessName?.toLowerCase().includes(search) ||
+        sme.sector?.toLowerCase().includes(search);
+
+      const matchesDecision =
+        decisionFilter === "All" || sme.loanDecision === decisionFilter;
+
+      return matchesSearch && matchesDecision;
+    });
+  }, [rankedProfiles, searchTerm, decisionFilter]);
+
+  const visibleProfiles = filteredProfiles.slice(0, visibleCount);
   const bestSme = rankedProfiles[0];
 
   const scatterData = profiles.map((sme) => ({
@@ -84,6 +108,16 @@ export default function InvestorDashboard({ profiles }) {
   const esgLeaderCount = profiles.filter(
     (sme) => sme.esgTier === "ESG Leader"
   ).length;
+
+  function handleSearchChange(event) {
+    setSearchTerm(event.target.value);
+    setVisibleCount(10);
+  }
+
+  function handleDecisionChange(event) {
+    setDecisionFilter(event.target.value);
+    setVisibleCount(10);
+  }
 
   return (
     <section className="dashboard">
@@ -167,22 +201,64 @@ export default function InvestorDashboard({ profiles }) {
       </div>
 
       <div className="panel">
-        <h3>SME Candidate Comparison</h3>
-        <Table
-          columns={[
-            { key: "smeId", label: "SME ID" },
-            { key: "businessName", label: "Business" },
-            { key: "sector", label: "Sector" },
-            { key: "creditScore", label: "Credit" },
-            { key: "readinessScore", label: "Readiness" },
-            { key: "esgScore", label: "ESG" },
-            { key: "fraudFlag", label: "Fraud" },
-            { key: "anomalyFlag", label: "Anomaly" },
-            { key: "loanDecision", label: "Decision" },
-            { key: "compositeScore", label: "Composite" },
-          ]}
-          rows={rankedProfiles}
-        />
+        <div className="panelHeaderRow">
+          <div>
+            <h3>SME Candidate Comparison</h3>
+            <p className="muted">
+              Showing {visibleProfiles.length} of {filteredProfiles.length} matching SMEs.
+            </p>
+          </div>
+
+          <div className="tableControls">
+            <input
+              value={searchTerm}
+              onChange={handleSearchChange}
+              placeholder="Search SME, business, sector..."
+            />
+
+            <select value={decisionFilter} onChange={handleDecisionChange}>
+              <option value="All">All Decisions</option>
+              <option value="APPROVE">Approve</option>
+              <option value="CONDITIONAL REVIEW">Conditional Review</option>
+              <option value="DECLINE">Decline</option>
+              <option value="REJECT">Reject</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="compactTable">
+          <Table
+            columns={[
+              { key: "smeId", label: "SME ID" },
+              { key: "businessName", label: "Business" },
+              { key: "sector", label: "Sector" },
+              { key: "creditScore", label: "Credit" },
+              { key: "readinessScore", label: "Readiness" },
+              { key: "esgScore", label: "ESG" },
+              { key: "loanDecision", label: "Decision" },
+              { key: "compositeScore", label: "Composite" },
+            ]}
+            rows={visibleProfiles}
+          />
+        </div>
+
+        <div className="tableFooter">
+          {visibleCount < filteredProfiles.length ? (
+            <button
+              className="secondaryButton"
+              onClick={() => setVisibleCount((current) => current + 10)}
+            >
+              Show 10 More
+            </button>
+          ) : filteredProfiles.length > 10 ? (
+            <button
+              className="secondaryButton"
+              onClick={() => setVisibleCount(10)}
+            >
+              Collapse List
+            </button>
+          ) : null}
+        </div>
       </div>
 
       <div className="panel">
