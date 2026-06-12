@@ -20,3 +20,4 @@ src/ganache.log
 # OS
 .DS_Store
 Thumbs.db
+vite.config.js
