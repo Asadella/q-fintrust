@@ -459,3 +459,102 @@ td {
 .secondaryButton:hover {
   background: #cbd5e1;
 }
+
+/* Cleaner global typography */
+:root {
+  font-family:
+    "Inter",
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    Arial,
+    sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+  font-family:
+    "Inter",
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    Arial,
+    sans-serif;
+}
+
+/* Cleaner buttons */
+button,
+.primaryButton,
+.resetButton,
+.secondaryButton,
+.navButton {
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.2;
+}
+
+/* Main action button */
+.primaryButton {
+  border-radius: 12px;
+  padding: 11px 16px;
+  font-size: 14px;
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.18);
+}
+
+/* Sidebar reset button */
+.resetButton {
+  border-radius: 12px;
+  padding: 11px 14px;
+  font-size: 14px;
+}
+
+/* Show more / collapse button */
+.secondaryButton {
+  border-radius: 12px;
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Sidebar navigation buttons */
+.navButton {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Small labels/badges should not look too bold */
+.presentationBadge,
+.eyebrow,
+.formGrid label,
+.kpiCard p {
+  font-weight: 600;
+}
+
+/* Inputs/selects cleaner */
+input,
+select {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+/* Table text cleaner */
+table {
+  font-size: 13.5px;
+}
+
+th {
+  font-weight: 600;
+}
+
+td {
+  font-weight: 400;
+}
