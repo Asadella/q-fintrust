@@ -42,6 +42,14 @@ class SmeInput(BaseModel):
     creditUtilization: float = 0.4
 
 
+@app.get("/")
+def root():
+    return {
+        "message": "Q-FinTrust backend is running",
+        "health": "/api/health",
+        "docs": "/docs"
+    }
+
 @app.get("/api/health")
 def health():
     return {"status": "ok"}
